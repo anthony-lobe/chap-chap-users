@@ -27,6 +27,12 @@ import Paiement from './paiement';
 import { Menu } from './menu';
 import { DetailCourse } from './detailCourse';
 import {Course} from './course';
+import { Wallet } from './wallet';
+import { UpdateProfil } from './updateProfile';
+import { Messenger } from './messenger';
+import { Cadeau } from './cadeau';
+import { Help } from './help';
+import { ResetPassword } from './resetPassword';
 
 const Stack = createStackNavigator();
 
@@ -42,6 +48,8 @@ const changeValue = (text) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [phoneNumber, setPhoneNumber] = useState(0)
+    const [paiementMethods, setPaiementMethods] = useState([])
+    const [score, setScore] = useState(0)
     const [passwd, setPasswd] = useState('')
     const [gender, setGender] = useState('')
 
@@ -50,7 +58,7 @@ const changeValue = (text) => {
         if (auth.currentUser) {
            userId = auth.currentUser.uid;
           const users = collection(db, "Users")
-          const payload = {Id: userId, Mail: email, Nom: name, Numero: phoneNumber, Sexe: gender }
+          const payload = {Id: userId, Mail: email, Nom: name, Numero: phoneNumber, Sexe: gender, methods: paiementMethods, score: score}
           await addDoc(users, payload)
         
       }
@@ -112,34 +120,34 @@ const changeValue = (text) => {
       }).catch( () => alert('Vérifiez votre mot de passe / Adresse-mail '))
     }
 
+
+
     return (
       <View style={styles.InscriptionContainer}>
 
       <Image source={newLogo} style={{width: 400, height: 400, marginTop: 50, alignSelf: 'center'}}/>
        <TextInput style={styles.inputText}   mode='outlined' onChangeText={ (text) => setEmail(text)} clearButtonMode="unless-editing" placeholder='Adresse Mail'/> 
        <TextInput style={styles.inputText} underlineColor="transparent"  mode='outlined' onChangeText={ (text) => setPasswd(text)}  secureTextEntry={true} clearButtonMode="unless-editing" placeholder='Mot de passe'/> 
-
-       <LinearGradient colors={['#f78f20', '#fd644f']} style={{ alignSelf: 'center', marginTop: 20, width: '50%', borderWidth: 1, borderColor: '#f78f20',  borderRadius: 15,  height: 40}}>
+       <LinearGradient colors={['#f78f20', '#fd644f']} style={{ alignSelf: 'center', marginTop: 10, width: '50%', borderWidth: 1, borderColor: '#f78f20',  borderRadius: 15,  height: 40}}>
        <TouchableOpacity  type="outline" onPress={handleLogin}>
 
           <Text style={{ alignSelf: 'center', margin: 8, fontWeight: 'bold', color: 'white'}}> Connexion </Text>
         </TouchableOpacity>
        </LinearGradient>
+        <TouchableOpacity style={{alignSelf: 'center', marginTop: 8 }} onPress={() => navigation.navigate("reset")}>
+        <Text style={{fontWeight: 'bold', fontStyle: 'normal', fontSize: 10, textDecorationLine: 'underline'}} > Mot de passe oublié?</Text>
 
-        <TouchableOpacity style={{alignSelf: 'center', marginTop: 4,}} onPress={() => navigation.navigate("inscription")}>
-        <Text style={{fontWeight: 'bold', fontStyle: 'normal', textDecorationLine: 'underline'}} > Inscription </Text>
+        </TouchableOpacity>
 
+        <TouchableOpacity style={{alignSelf: 'center', flexDirection: 'row', marginTop: 10}} onPress={() => navigation.navigate("inscription")}>
+        <Text style={{fontStyle: 'normal', fontSize: 12, }} > Vous n'avez pas de compte ?</Text>
+        <Text style={{fontStyle: 'normal', fontSize: 12, fontWeight: 'bold', textDecorationLine: 'underline' }} > Créez</Text>
         </TouchableOpacity>
         <Image source={footerImage2} style={{height: 250,}}/>
         
         <View style={{flexDirection: 'row', marginLeft: 85, marginBottom: 10, alignItems: 'center'}}>
+       
 
-
-        <Text style={{alignSelf: 'center', marginBottom: 20,}}> Vous n'avez pas de compte ?</Text>
-        <TouchableOpacity>
-        <Text style={{fontWeight: 'bold', marginBottom: 20, textDecorationLine: 'underline'}} onPress={() => navigation.navigate('inscription')}> Créez</Text>
-
-        </TouchableOpacity>
 
         </View>
         
@@ -199,6 +207,12 @@ const changeValue = (text) => {
       <Stack.Screen name="menu" component={Menu}></Stack.Screen>
       <Stack.Screen name="detail" component={DetailCourse}></Stack.Screen>
       <Stack.Screen name="course" component={Course}></Stack.Screen>
+      <Stack.Screen name="wallet" component={Wallet}></Stack.Screen>
+     <Stack.Screen name="updateProfil" component={UpdateProfil}></Stack.Screen>
+     <Stack.Screen name="messagerie" component={Messenger}></Stack.Screen>
+     <Stack.Screen name="help" component={Help}></Stack.Screen>
+     <Stack.Screen name="reset" component={ResetPassword}></Stack.Screen>
+
 
       </Stack.Navigator>
 
