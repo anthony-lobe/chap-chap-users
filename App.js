@@ -33,6 +33,7 @@ import { Messenger } from './messenger';
 import { Cadeau } from './cadeau';
 import { Help } from './help';
 import { ResetPassword } from './resetPassword';
+import { Parameters } from './parameters';
 
 const Stack = createStackNavigator();
 
@@ -212,6 +213,7 @@ const changeValue = (text) => {
      <Stack.Screen name="messagerie" component={Messenger}></Stack.Screen>
      <Stack.Screen name="help" component={Help}></Stack.Screen>
      <Stack.Screen name="reset" component={ResetPassword}></Stack.Screen>
+     <Stack.Screen name="parameters" component={Parameters}></Stack.Screen>
 
 
       </Stack.Navigator>
